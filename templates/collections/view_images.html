@@ -1,0 +1,42 @@
+{% extends "base.html"%}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class = 'container mt-5'>
+
+  <h1 class = 'page-title mb-5 text-center'> Your Images</h1>
+  
+    <div class = 'container super-container'>
+      <div class = 'container d-flex image-container'>
+        {%for images in images%}
+          {%load thumbnail%}
+
+            {%thumbnail images.image '200x200' as im%}
+
+            <div class="card mb-5 ml-2 image-card-images d-flex flex-column">
+              <div class = 'image-thumbnail-container '>
+               <img src='{{images.image.url}}' class="card-img-top" alt="...">
+              </div>
+              <div class="card-body delete-button">
+                <form  action="{%url 'delete_images' images.id %}"method='POST'>
+                  {%csrf_token%}
+                    <button type="submit" value="submit" style ='border: none'class="x-delete">✖</button>
+                </form> 
+              </div>
+            </div> 
+
+           {%endthumbnail%}
+         {%endfor%}
+        </div>
+        <div class = 'd-flex flex-column justify-content-center gallery-items-buttons'>
+
+          <a href = "{%url 'upload' albums.id%}"><button type="button" style = 'border: none;'class="upload-pictures">+</button></a>
+          <a href = "{%url 'view'%}"><button type="button" style = 'border: none'class="go-back">➥</button></a>
+          <a href = "{%url 'gallery' albums.id%}"><button type="button" style = 'border: none'class="to-gallery">➥</button></a>
+
+  {% endblock content %}
+         </div>
+
+</div>
+

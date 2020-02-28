@@ -1,0 +1,48 @@
+{% extends "base.html"%}
+{%load crispy_forms_tags%}
+{% block content %}
+
+<div class = 'container'>
+<h1 class = 'mt-5'>
+    Sign up form
+</h1>
+
+<form method = 'POST' class = 'mt-5'>
+    {%csrf_token%}
+    <fieldset class= 'form-group'>
+    <legend class = 'border-bottom mb-4'>Register</legend>
+
+        <div class="form-group col-md-6 mb-0">
+            <div class = 'username'>
+                    {{ form.username|as_crispy_field }}
+            </div>
+            <div class = 'email'>
+                    {{ form.email|as_crispy_field }}
+
+            </div>
+            <div class = 'password1'>
+                    {{ form.password1|as_crispy_field }}
+
+            </div>
+            <div class = 'password2'>
+                    {{ form.password2|as_crispy_field }}
+
+            </div>
+
+    </div>
+       
+       
+    </fieldset>
+    <div class="form-group">
+    <button class = 'dashboard-button create-button ml-3' type='submit'>sign up</button>
+    </div>
+</form>
+
+<div class = 'border-top pt-3 mb-5'>
+        <small class = 'text-muted'>Have an account?
+                <a href='#' class= 'ml-2'>Sign in</a>
+        </small>
+</div>
+
+</div>
+{% endblock content %}

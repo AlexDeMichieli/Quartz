@@ -1,0 +1,1 @@
+web: gunicorn quartz_project.wsgi

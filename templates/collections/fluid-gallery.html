@@ -1,0 +1,99 @@
+{%load static%}
+<!-- https://codepen.io/CrocoDillon/pen/xnisG -->
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+        <link rel="stylesheet" href="{% static 'css/fluid-gallery.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+
+    <body>
+    
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark main-nav">
+
+                <a class="navbar-brand" href="{%url 'index'%}">Home</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="nav navbar-nav ml-auto">
+                    
+                    {%if user.is_authenticated%}
+                    <li class="nav-item navbar-link profile">
+                        <a class="nav-link" href="{%url 'profile'%}">Profile</a>
+                    </li>
+                    <li class="nav-item navbar-link dashboard">
+                      <a class="nav-link" href="{%url 'dashboard'%}">Dashboard</a>
+                    </li>
+                    <li class="nav-item  navbar-link">
+                        <a class="nav-link " href="{%url 'logout'%}">Logout</a>
+                    </li>
+                    <li class="nav-picture" data-toggle="popover" title="{{ user.username }}" >
+                        {%load thumbnail%}
+                        {%thumbnail user.profile.image '800' as im%}
+                        <img class="user-nav-picture" src="{{ user.profile.image.url }}">
+                        {%endthumbnail%}
+                      </li>
+                      
+                      <ul id="popover-content" class="list-group" style="display: none">
+                          <a class="list-group-item tooltip-menu" href = "{%url 'password_change'%}">Change Password</a>
+                          <a class="list-group-item tooltip-menu" href = "{%url 'password_reset'%}">Reset Password</a>
+                      </ul>
+
+                    {%else%}
+                    <li class="nav-item navbar-link register">
+                      <a class="nav-link" href="{%url 'register'%}">Register</a>
+                    </li>
+                    <li class="nav-item navbar-link login ">
+                      <a class="nav-link" href="{%url 'login'%}"> Login</a>
+                    </li>
+
+                    {%endif%}
+                  </ul>
+                </div>
+              </nav>
+        <div class = 'quadrant'></div>
+        <div class="container gallery-container mt-5">
+            
+            <div class="masonry tz-gallery mt-5">
+
+                    {%for images in images%}
+                    {%load thumbnail%}
+                    {%thumbnail images.image '800' as gm%}
+                <div class = 'grid-image-container'>
+                    <a class="lightbox " href='{{images.image.url}}'>
+                    <img class= 'fluid-gallery-images par item' src= '{{images.image.url}}' alt ='gallery-images'>
+                    </a>
+                    <div class = 'share-container'>
+                      <button data-href="{{images.image.url}}" value="Open a Popup Window" class = "fb-share-button fa fa-facebook"></button>
+                      <button data-href="{{images.image.url}}" value="Open a Popup Window" class = "pinterest-share-button fa fa-pinterest"></button>
+                    </div>
+                </div>
+
+                {%endthumbnail%}
+
+                    {%endfor%}
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src = "{% static 'js/main.js' %}" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+        <script>
+            baguetteBox.run('.tz-gallery');
+        </script>
+        <script src = "{% static 'js/main.js' %}" ></script>
+    </body>
+</html>

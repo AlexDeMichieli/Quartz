@@ -1,0 +1,44 @@
+{% extends "base.html"%}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class = 'cointainer ml-3'>
+
+  <h1 class = 'mb-5 mt-5 text-center'>Your Profile</h1>
+
+    <div class="content-section ">
+        {%load thumbnail%}
+        {%thumbnail user.profile.image '1200' as im%}
+
+        <div class="media-body ">
+          <div class = 'media-content d-flex flex-column'>
+            <img class="user-profile-picture" src="{{ user.profile.image.url }}">
+            <h3 class="account-heading">{{ user.username }}</h3>
+            <p class="text-secondary">{{ user.email }}</p>
+          </div>
+        </div>
+        {%endthumbnail%}
+
+      <div class= 'profile-form mt-5 '>
+        <form method = 'POST' enctype = 'multipart/form-data'>
+          {%csrf_token%}
+          <fieldset class= 'form-group'>
+          <legend class = 'border-bottom mb-4'>Profile Info</legend>    
+              <div class="form-group ">
+                <div class = ''>
+                  {{ u_form | crispy }}
+                </div>
+                <div class = 'test-test'>
+                  {{ p_form | crispy }} 
+                </div>
+          </div>
+          </fieldset>
+          <div class="form-group">
+          <button class = 'btn btn-dark' type='submit'>Update</button>
+          </div>
+      </form>
+    </div>
+
+    </div>
+{% endblock content %}
+</div>
