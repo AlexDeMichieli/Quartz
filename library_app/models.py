@@ -6,7 +6,7 @@ from PIL import Image
 
 class Album(models.Model):
     title = models.CharField(max_length=60)
-    album_cover = models.ImageField(upload_to="album_thumnbails",  blank=True, null=True, )
+    album_cover = models.ImageField(upload_to="images/",  blank=True, null=True, )
     user = models.ForeignKey(User, on_delete = models.CASCADE, null=True, blank=True)
 
     # public = models.BooleanField(default=False)
@@ -25,7 +25,7 @@ class Album(models.Model):
 
 class Image(models.Model):
     title = models.CharField(max_length=60, blank=True, null=True)
-    image = models.ImageField(upload_to="galleries" )
+    image = models.ImageField(upload_to="images/" )
     albums = models.ForeignKey(Album, on_delete = models.CASCADE, blank=True)
 
     def __str__(self):
