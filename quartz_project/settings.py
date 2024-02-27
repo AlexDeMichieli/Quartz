@@ -181,6 +181,7 @@ CLOUDINARY_STORAGE ={
   'API_SECRET': os.environ.get("API_SECRET")
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+SESSION_COOKIE_SECURE = True
 
 
 
