@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import dj_database_url
+try:
+    import dj_database_url
+except ImportError:
+    dj_database_url = None
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -35,16 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
+    # 'cloudinary_storage',
     'django.contrib.staticfiles',
-    "cloudinary",
-    'crispy_forms',
+    # "cloudinary",
+    # 'crispy_forms',
     'quartz_app',
     'library_app',
     'users_app',
-    'storages',
-    'collectfast',
-    'sorl.thumbnail',
+    # 'storages',
+    # 'collectfast',
+    # 'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -93,16 +96,25 @@ WSGI_APPLICATION = 'quartz_project.wsgi.application'
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get('NAME'),
-        "USER": os.environ.get('USER'),
-        "PASSWORD": os.environ.get('PASSWORD'),
-        "HOST": os.environ.get('HOST'),
-        "PORT": "",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
+# For production, use PostgreSQL
+if not DEBUG and dj_database_url:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.environ.get('NAME'),
+            "USER": os.environ.get('USER'),
+            "PASSWORD": os.environ.get('PASSWORD'),
+            "HOST": os.environ.get('HOST'),
+            "PORT": "",
+        }
+    }
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 
 # Password validation
@@ -166,7 +178,7 @@ if DEBUG:
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'test-secret-key-for-development-only-12345')
 
 # AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 # AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
@@ -175,12 +187,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
 
-CLOUDINARY_STORAGE ={
-  'CLOUD_NAME': os.environ.get("CLOUD_NAME"), 
-  'API_KEY': os.environ.get("API_KEY"),
-  'API_SECRET': os.environ.get("API_SECRET")
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# CLOUDINARY_STORAGE ={
+#   'CLOUD_NAME': os.environ.get("CLOUD_NAME"), 
+#   'API_KEY': os.environ.get("API_KEY"),
+#   'API_SECRET': os.environ.get("API_SECRET")
+# }
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 
