@@ -39,6 +39,6 @@ Temporary Items
 
 # End of https://www.gitignore.io/api/macos
 
-# Pip source directory
+# Pip build artifacts and source directory
 src/
   
