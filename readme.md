@@ -4,6 +4,20 @@ Quartz is an online gallery built with Django and connected to Amazon S3 and Pos
 
 The app is deployed at https://qwartz.herokuapp.com/
 
+## Hello World Example
+
+A simple Hello World Python script is included in the root directory:
+
+```bash
+python hello_world.py
+```
+
+To run the tests:
+
+```bash
+python test_hello_world.py
+```
+
 ## Why did the developer break up with their code?
 
 Because it wasn't returning their calls! 😄
