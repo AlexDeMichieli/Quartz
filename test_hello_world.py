@@ -18,8 +18,8 @@ def test_hello_world_script():
 
 def test_hello_world_function():
     """Test that the hello_world function exists and works"""
-    import hello_world
     from io import StringIO
+    import hello_world
     
     # Test that main function exists
     assert hasattr(hello_world, 'main'), "hello_world.main function not found"
