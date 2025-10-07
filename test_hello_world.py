@@ -2,8 +2,8 @@
 Test file for hello_world.py
 """
 import unittest
+from unittest.mock import patch
 from io import StringIO
-import sys
 import hello_world
 
 
@@ -12,18 +12,13 @@ class TestHelloWorld(unittest.TestCase):
 
     def test_main_prints_hello_world(self):
         """Test that main() prints 'Hello, World!' to stdout."""
-        # Capture stdout
-        captured_output = StringIO()
-        sys.stdout = captured_output
-        
-        # Call the main function
-        hello_world.main()
-        
-        # Reset stdout
-        sys.stdout = sys.__stdout__
-        
-        # Assert the output
-        self.assertEqual(captured_output.getvalue().strip(), "Hello, World!")
+        # Capture stdout using mock.patch for proper cleanup
+        with patch('sys.stdout', new=StringIO()) as mock_stdout:
+            # Call the main function
+            hello_world.main()
+            
+            # Assert the output
+            self.assertEqual(mock_stdout.getvalue().strip(), "Hello, World!")
 
 
 if __name__ == "__main__":
