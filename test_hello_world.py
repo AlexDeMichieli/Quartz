@@ -16,13 +16,15 @@ class TestHelloWorld(unittest.TestCase):
         """Test that main() prints 'Hello, World!'"""
         # Capture stdout
         captured_output = StringIO()
-        sys.stdout = captured_output
+        original_stdout = sys.stdout
         
-        # Call the main function
-        hello_world.main()
-        
-        # Restore stdout
-        sys.stdout = sys.__stdout__
+        try:
+            sys.stdout = captured_output
+            # Call the main function
+            hello_world.main()
+        finally:
+            # Always restore stdout
+            sys.stdout = original_stdout
         
         # Check output
         self.assertEqual(captured_output.getvalue().strip(), "Hello, World!")
